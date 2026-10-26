@@ -1,0 +1,6 @@
+{
+  "name": "Windows X-Ray - System Monitor",
+  "description": "Real-Time System Monitoring & Diagnostic Tool for Windows 10/11 with CPU, RAM, Disk, Network, Process Inspection, Rule-Based Diagnostics, and Reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
