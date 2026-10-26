@@ -3,10 +3,8 @@ import {
   FileSpreadsheet,
   Download,
   Trash2,
-  Calendar,
   FileCode,
   CheckCircle2,
-  AlertTriangle,
 } from 'lucide-react';
 import { TelemetrySnapshot, ProcessItem } from '../../logic/metrics';
 import { DiagnosticItem } from '../../logic/diagnostics';
@@ -91,16 +89,16 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
     const diagRows = diagnostics
       .map(
         (d) => `
-      <tr style="border-bottom: 1px solid #1f293d;">
-        <td style="padding: 10px; font-weight: bold; color: #f1f5f9;">
-          <span style="display:inline-block; padding: 2px 6px; border-radius: 4px; font-size: 10px; background: ${
-            d.severity === 'critical' ? '#ef4444' : d.severity === 'warning' ? '#f59e0b' : '#10b981'
+      <tr style="border-bottom: 1px solid #27272a;">
+        <td style="padding: 10px; font-weight: bold; color: #f4f4f5;">
+          <span style="display:inline-block; padding: 2px 6px; border-radius: 3px; font-size: 10px; background: ${
+            d.severity === 'critical' ? '#ef4444' : d.severity === 'warning' ? '#eab308' : '#22c55e'
           }; color: #000; margin-right: 6px;">${d.severity.toUpperCase()}</span>
           ${d.title}
         </td>
-        <td style="padding: 10px; color: #cbd5e1;">${d.evidence}</td>
-        <td style="padding: 10px; color: #94a3b8; font-size: 11px;">${d.threshold}</td>
-        <td style="padding: 10px; color: #60a5fa;">${d.practicalStep}</td>
+        <td style="padding: 10px; color: #d4d4d8;">${d.evidence}</td>
+        <td style="padding: 10px; color: #a1a1aa; font-size: 11px;">${d.threshold}</td>
+        <td style="padding: 10px; color: #38bdf8;">${d.practicalStep}</td>
       </tr>
     `
       )
@@ -110,12 +108,12 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
       .slice(0, 10)
       .map(
         (p) => `
-      <tr style="border-bottom: 1px solid #1f293d; font-family: monospace;">
-        <td style="padding: 8px; color: #94a3b8;">${p.pid}</td>
-        <td style="padding: 8px; font-weight: bold; color: #f1f5f9; font-family: sans-serif;">${p.name}</td>
-        <td style="padding: 8px; color: #60a5fa;">${p.cpuPercent.toFixed(1)}%</td>
-        <td style="padding: 8px; color: #cbd5e1;">${(p.memoryBytes / (1024 * 1024)).toFixed(0)} MB</td>
-        <td style="padding: 8px; color: #10b981;">${p.status}</td>
+      <tr style="border-bottom: 1px solid #27272a; font-family: monospace;">
+        <td style="padding: 8px; color: #71717a;">${p.pid}</td>
+        <td style="padding: 8px; font-weight: bold; color: #f4f4f5; font-family: sans-serif;">${p.name}</td>
+        <td style="padding: 8px; color: #38bdf8;">${p.cpuPercent.toFixed(1)}%</td>
+        <td style="padding: 8px; color: #d4d4d8;">${(p.memoryBytes / (1024 * 1024)).toFixed(0)} MB</td>
+        <td style="padding: 8px; color: #22c55e;">${p.status}</td>
       </tr>
     `
       )
@@ -127,22 +125,22 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
   <meta charset="UTF-8">
   <title>Windows X-Ray Diagnostic Report</title>
   <style>
-    body { background: #0a0f1d; color: #f1f5f9; font-family: -apple-system, Segoe UI, Roboto, sans-serif; padding: 25px; margin: 0; line-height: 1.5; }
-    .box { background: #111827; border: 1px solid #1f293d; border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+    body { background: #09090b; color: #f4f4f5; font-family: -apple-system, Segoe UI, Roboto, sans-serif; padding: 25px; margin: 0; line-height: 1.5; }
+    .box { background: #121215; border: 1px solid #27272a; border-radius: 6px; padding: 16px; margin-bottom: 20px; }
     table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    th { background: #162032; padding: 10px; text-align: left; color: #94a3b8; border-bottom: 1px solid #1f293d; }
+    th { background: #18181b; padding: 10px; text-align: left; color: #a1a1aa; border-bottom: 1px solid #27272a; }
   </style>
 </head>
 <body>
   <div style="max-width: 900px; margin: 0 auto;">
-    <h1 style="color: #3b82f6; margin-bottom: 4px;">WINDOWS X-RAY</h1>
-    <div style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">Real-Time System Monitoring & Diagnostic Audit Report</div>
+    <h1 style="color: #38bdf8; margin-bottom: 4px;">WINDOWS X-RAY</h1>
+    <div style="color: #a1a1aa; font-size: 13px; margin-bottom: 20px;">Real-Time System Monitoring & Diagnostic Audit Report</div>
 
     <div class="box">
       <strong>Host Information:</strong> ${snapshot.osName} (${snapshot.osVersion}) | <strong>CPU:</strong> ${snapshot.cpuModel} | <strong>Mode:</strong> ${snapshot.isDemo ? 'DEMO' : 'LIVE'}
     </div>
 
-    <h3 style="color: #cbd5e1;">Diagnostic Findings</h3>
+    <h3 style="color: #f4f4f5;">Diagnostic Findings</h3>
     <div class="box">
       <table>
         <thead>
@@ -152,7 +150,7 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
       </table>
     </div>
 
-    <h3 style="color: #cbd5e1;">Top Active Workloads</h3>
+    <h3 style="color: #f4f4f5;">Top Active Workloads</h3>
     <div class="box">
       <table>
         <thead><tr><th>PID</th><th>Task Name</th><th>CPU</th><th>RAM</th><th>Status</th></tr></thead>
@@ -160,7 +158,7 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
       </table>
     </div>
 
-    <div style="font-size: 11px; color: #64748b; margin-top: 30px;">
+    <div style="font-size: 11px; color: #71717a; margin-top: 30px;">
       Privacy Pledge: No passwords, private documents, or sensitive data are included. Findings are advisory rule evaluations.
     </div>
   </div>
@@ -182,17 +180,17 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
   };
 
   return (
-    <div className="space-y-5 pb-6">
+    <div className="space-y-4 pb-6">
       {/* Header */}
-      <div className="bg-[#10172a] border border-[#1f293d] rounded-lg p-4 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-[#121215] border border-[#27272a] rounded p-4 flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <FileSpreadsheet className="w-5 h-5 text-emerald-400" />
-            <h2 className="text-base font-bold text-slate-100">
-              Metrics History & Audit Reports Export
+            <FileSpreadsheet className="w-5 h-5 text-[#22c55e]" />
+            <h2 className="text-base font-bold text-[#fafafa]">
+              Metrics History & Audit Reports
             </h2>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#a1a1aa] mt-1">
             Bounded local metric log storage with automated pruning and zero telemetry leakage.
           </p>
         </div>
@@ -201,7 +199,7 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={handleExportCSV}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-semibold text-xs transition-colors shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#18181b] hover:bg-[#27272a] text-[#86efac] border border-[#27272a] text-xs font-semibold transition-colors cursor-pointer"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -209,7 +207,7 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
 
           <button
             onClick={handleExportHTML}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-colors shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#18181b] hover:bg-[#27272a] text-[#38bdf8] border border-[#27272a] text-xs font-semibold transition-colors cursor-pointer"
           >
             <FileCode className="w-3.5 h-3.5" />
             <span>Export HTML Report</span>
@@ -218,18 +216,18 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
       </div>
 
       {exportNotice && (
-        <div className="p-3 rounded-lg bg-emerald-950/40 border border-emerald-500/40 text-emerald-200 text-xs flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="p-2.5 rounded bg-emerald-950/30 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4 text-[#22c55e] shrink-0" />
           <span>{exportNotice}</span>
         </div>
       )}
 
       {/* Retention Controls & Storage Status */}
-      <div className="bg-[#10172a] border border-[#1f293d] rounded-lg p-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        <div className="p-3 rounded bg-[#0b1220] border border-[#1a253a] space-y-2">
+      <div className="bg-[#121215] border border-[#27272a] rounded p-4 grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+        <div className="p-3 rounded bg-[#18181b] border border-[#27272a] space-y-2">
           <div className="flex items-center justify-between font-semibold">
-            <span className="text-slate-300">Bounded Retention Window</span>
-            <span className="text-blue-400 font-mono">{retentionDays} Days</span>
+            <span className="text-[#a1a1aa]">Bounded Retention Window</span>
+            <span className="text-[#38bdf8] font-mono">{retentionDays} Days</span>
           </div>
           <input
             type="range"
@@ -238,44 +236,44 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
             value={retentionDays}
             onChange={(e) => onChangeRetentionDays(parseInt(e.target.value))}
             aria-label="Retention Days"
-            className="w-full accent-blue-500 cursor-pointer"
+            className="w-full accent-[#38bdf8] cursor-pointer"
           />
-          <div className="text-[11px] text-slate-500">
-            Records older than {retentionDays} days are pruned automatically from local SQLite storage.
+          <div className="text-[11px] text-[#71717a]">
+            Records older than {retentionDays} days are pruned automatically from local storage.
           </div>
         </div>
 
-        <div className="p-3 rounded bg-[#0b1220] border border-[#1a253a] flex flex-col justify-between">
+        <div className="p-3 rounded bg-[#18181b] border border-[#27272a] flex flex-col justify-between">
           <div>
-            <div className="font-semibold text-slate-300">Local Telemetry Store</div>
-            <div className="text-[11px] text-slate-400 mt-1">
-              Currently holding <span className="font-bold text-slate-200">{historyEntries.length}</span> metric samples in local storage.
+            <div className="font-semibold text-[#fafafa]">Local Telemetry Store</div>
+            <div className="text-[11px] text-[#a1a1aa] mt-0.5">
+              Currently holding <span className="font-bold text-[#fafafa] font-mono">{historyEntries.length}</span> metric samples in memory / SQLite.
             </div>
           </div>
           <div className="pt-2">
             {!showClearConfirm ? (
               <button
                 onClick={() => setShowClearConfirm(true)}
-                className="flex items-center gap-1.5 text-rose-400 hover:text-rose-300 font-medium text-xs"
+                className="flex items-center gap-1.5 text-[#ef4444] hover:text-[#f87171] font-medium text-xs cursor-pointer"
               >
                 <Trash2 className="w-3.5 h-3.5" />
                 <span>Clear All Logged History...</span>
               </button>
             ) : (
               <div className="flex items-center gap-2">
-                <span className="text-rose-300 font-medium text-xs">Confirm wipe?</span>
+                <span className="text-[#ef4444] font-medium text-xs">Confirm wipe?</span>
                 <button
                   onClick={() => {
                     onClearHistory();
                     setShowClearConfirm(false);
                   }}
-                  className="px-2 py-0.5 rounded bg-rose-600 text-white font-bold text-[11px]"
+                  className="px-2 py-0.5 rounded bg-[#b91c1c] text-white font-bold text-[11px] cursor-pointer"
                 >
                   Yes, Clear
                 </button>
                 <button
                   onClick={() => setShowClearConfirm(false)}
-                  className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[11px]"
+                  className="px-2 py-0.5 rounded bg-[#27272a] text-[#a1a1aa] text-[11px] cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -286,41 +284,41 @@ export const HistoryReportsView: React.FC<HistoryReportsViewProps> = ({
       </div>
 
       {/* Historical Telemetry Table */}
-      <div className="bg-[#10172a] border border-[#1f293d] rounded-lg overflow-hidden">
-        <div className="p-3 bg-[#141e36] border-b border-[#1f293d] flex items-center justify-between text-xs">
-          <span className="font-bold text-slate-200">Recent Telemetry Samples</span>
-          <span className="text-slate-400 font-mono">Total {historyEntries.length} samples</span>
+      <div className="bg-[#121215] border border-[#27272a] rounded overflow-hidden">
+        <div className="p-2.5 bg-[#18181b] border-b border-[#27272a] flex items-center justify-between text-xs">
+          <span className="font-bold text-[#fafafa]">Recent Telemetry Samples</span>
+          <span className="text-[#71717a] font-mono">{historyEntries.length} samples logged</span>
         </div>
-        <div className="overflow-x-auto max-h-72">
+        <div className="overflow-x-auto max-h-64">
           <table className="w-full text-left border-collapse text-xs font-mono">
-            <thead className="bg-[#0b1220] text-slate-400 sticky top-0">
+            <thead className="bg-[#09090b] text-[#71717a] sticky top-0">
               <tr>
-                <th className="py-2.5 px-4">Time</th>
-                <th className="py-2.5 px-4">CPU %</th>
-                <th className="py-2.5 px-4">RAM %</th>
-                <th className="py-2.5 px-4">Disk %</th>
-                <th className="py-2.5 px-4">Down KB/s</th>
-                <th className="py-2.5 px-4">Up KB/s</th>
-                <th className="py-2.5 px-4">Source</th>
+                <th className="py-2 px-3">Time</th>
+                <th className="py-2 px-3">CPU %</th>
+                <th className="py-2 px-3">RAM %</th>
+                <th className="py-2 px-3">Disk %</th>
+                <th className="py-2 px-3">Down KB/s</th>
+                <th className="py-2 px-3">Up KB/s</th>
+                <th className="py-2 px-3">Source</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#1f293d]">
-              {historyEntries.slice(0, 30).map((row) => (
-                <tr key={row.id} className="hover:bg-[#15203b]">
-                  <td className="py-2 px-4 text-slate-400">
+            <tbody className="divide-y divide-[#27272a]">
+              {historyEntries.slice(0, 25).map((row) => (
+                <tr key={row.id} className="hover:bg-[#18181b]">
+                  <td className="py-1.5 px-3 text-[#71717a]">
                     {new Date(row.timestamp).toLocaleTimeString()}
                   </td>
-                  <td className="py-2 px-4 text-blue-400 font-semibold">{row.cpuPercent.toFixed(1)}%</td>
-                  <td className="py-2 px-4 text-emerald-400 font-semibold">{row.memoryPercent.toFixed(1)}%</td>
-                  <td className="py-2 px-4 text-purple-400">{row.diskPercent.toFixed(1)}%</td>
-                  <td className="py-2 px-4 text-cyan-400">{row.netDownKbps.toFixed(1)}</td>
-                  <td className="py-2 px-4 text-indigo-300">{row.netUpKbps.toFixed(1)}</td>
-                  <td className="py-2 px-4 font-sans text-[11px]">
+                  <td className="py-1.5 px-3 text-[#38bdf8] font-semibold">{row.cpuPercent.toFixed(1)}%</td>
+                  <td className="py-1.5 px-3 text-[#22c55e] font-semibold">{row.memoryPercent.toFixed(1)}%</td>
+                  <td className="py-1.5 px-3 text-[#a855f7]">{row.diskPercent.toFixed(1)}%</td>
+                  <td className="py-1.5 px-3 text-[#f4f4f5]">{row.netDownKbps.toFixed(1)}</td>
+                  <td className="py-1.5 px-3 text-[#a1a1aa]">{row.netUpKbps.toFixed(1)}</td>
+                  <td className="py-1.5 px-3 font-sans text-[11px]">
                     <span
-                      className={`px-1.5 py-0.2 rounded font-semibold ${
+                      className={`px-1 py-0.2 rounded font-semibold ${
                         row.isDemo
-                          ? 'bg-amber-500/15 text-amber-400'
-                          : 'bg-emerald-500/15 text-emerald-400'
+                          ? 'bg-[#ca8a04]/20 text-[#fde047]'
+                          : 'bg-[#15803d]/20 text-[#86efac]'
                       }`}
                     >
                       {row.isDemo ? 'DEMO' : 'LIVE'}

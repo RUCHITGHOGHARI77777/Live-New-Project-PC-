@@ -28,11 +28,11 @@ export const CpuView: React.FC<CpuViewProps> = ({
     const height = canvas.height;
 
     // Clear background
-    ctx.fillStyle = '#0c1322';
+    ctx.fillStyle = '#09090b';
     ctx.fillRect(0, 0, width, height);
 
     // Draw grid lines (25%, 50%, 75%, 100%)
-    ctx.strokeStyle = '#1a2438';
+    ctx.strokeStyle = '#27272a';
     ctx.lineWidth = 1;
     for (let p = 0; p <= 100; p += 25) {
       const y = height - (p / 100) * height;
@@ -43,7 +43,7 @@ export const CpuView: React.FC<CpuViewProps> = ({
 
       // Label
       if (p > 0 && p < 100) {
-        ctx.fillStyle = '#475569';
+        ctx.fillStyle = '#71717a';
         ctx.font = '10px monospace';
         ctx.fillText(`${p}%`, 6, y - 3);
       }
@@ -63,8 +63,8 @@ export const CpuView: React.FC<CpuViewProps> = ({
       else ctx.lineTo(x, y);
     });
 
-    ctx.strokeStyle = '#3b82f6';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 1.75;
     ctx.stroke();
 
     // Area fill gradient
@@ -72,37 +72,37 @@ export const CpuView: React.FC<CpuViewProps> = ({
     ctx.lineTo(startX, height);
     ctx.closePath();
     const gradient = ctx.createLinearGradient(0, 0, 0, height);
-    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.25)');
-    gradient.addColorStop(1, 'rgba(59, 130, 246, 0.0)');
+    gradient.addColorStop(0, 'rgba(56, 189, 248, 0.18)');
+    gradient.addColorStop(1, 'rgba(56, 189, 248, 0.0)');
     ctx.fillStyle = gradient;
     ctx.fill();
   }, [historyCpu]);
 
   return (
-    <div className="space-y-5 pb-6">
+    <div className="space-y-4 pb-6">
       {/* Header and Controls */}
-      <div className="bg-[#10172a] border border-[#1f293d] rounded-lg p-4 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-[#121215] border border-[#27272a] rounded p-4 flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Cpu className="w-5 h-5 text-blue-400" />
-            <h2 className="text-base font-bold text-slate-100">
+            <Cpu className="w-5 h-5 text-[#38bdf8]" />
+            <h2 className="text-base font-bold text-[#fafafa]">
               Processor Utilization & Per-Core Telemetry
             </h2>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-[#a1a1aa] mt-1">
             {snapshot.cpuModel} • {snapshot.physicalCores} Physical Cores / {snapshot.logicalCores} Logical Threads
           </p>
         </div>
 
         {/* Sampling Interval Selector */}
-        <div className="flex items-center gap-2 text-xs bg-[#0b1220] px-3 py-1.5 rounded border border-[#1f293d]">
-          <Sliders className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-slate-400">Sample Rate:</span>
+        <div className="flex items-center gap-2 text-xs bg-[#18181b] px-3 py-1.5 rounded border border-[#27272a]">
+          <Sliders className="w-3.5 h-3.5 text-[#71717a]" />
+          <span className="text-[#a1a1aa]">Sample Rate:</span>
           <select
             value={refreshInterval}
             onChange={(e) => onChangeInterval(parseFloat(e.target.value))}
             aria-label="Processor Sample Rate"
-            className="bg-[#162032] border border-[#26354f] text-blue-300 font-semibold rounded px-2 py-0.5 outline-none cursor-pointer"
+            className="bg-[#121215] border border-[#27272a] text-[#f4f4f5] font-semibold rounded px-2 py-0.5 outline-none cursor-pointer"
           >
             <option value="0.5">0.5s (High Frequency)</option>
             <option value="1.0">1.0s (Recommended Standard)</option>
@@ -113,19 +113,19 @@ export const CpuView: React.FC<CpuViewProps> = ({
       </div>
 
       {/* Main Graph & Big Stats */}
-      <div className="bg-[#10172a] border border-[#1f293d] rounded-lg p-4">
+      <div className="bg-[#121215] border border-[#27272a] rounded p-4">
         <div className="flex items-center justify-between mb-3 text-xs">
           <div className="flex items-center gap-2">
-            <Activity className="w-4 h-4 text-blue-400" />
-            <span className="font-semibold text-slate-200">Real-Time Utilization History (60s)</span>
+            <Activity className="w-4 h-4 text-[#38bdf8]" />
+            <span className="font-semibold text-[#fafafa]">Real-Time Utilization History (60s)</span>
           </div>
-          <div className="font-mono text-slate-400">
-            Current Overall: <span className="text-blue-400 font-bold">{snapshot.cpuOverallPercent.toFixed(1)}%</span>
+          <div className="font-mono text-[#a1a1aa]">
+            Current Overall: <span className="text-[#38bdf8] font-bold">{snapshot.cpuOverallPercent.toFixed(1)}%</span>
           </div>
         </div>
 
         {/* Canvas Chart */}
-        <div className="w-full h-48 rounded border border-[#1a253a] overflow-hidden bg-[#0c1322]">
+        <div className="w-full h-48 rounded border border-[#27272a] overflow-hidden bg-[#09090b]">
           <canvas
             ref={canvasRef}
             width={900}
@@ -136,42 +136,42 @@ export const CpuView: React.FC<CpuViewProps> = ({
       </div>
 
       {/* Per-Core Breakdown Grid */}
-      <div className="bg-[#10172a] border border-[#1f293d] rounded-lg p-4">
+      <div className="bg-[#121215] border border-[#27272a] rounded p-4">
         <div className="flex items-center gap-2 mb-3 text-xs">
-          <Zap className="w-4 h-4 text-amber-400" />
-          <span className="font-bold text-slate-200 uppercase tracking-wide">
+          <Zap className="w-4 h-4 text-[#eab308]" />
+          <span className="font-bold text-[#fafafa] uppercase tracking-wide">
             Individual Thread Utilization
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
           {snapshot.cpuPerCorePercent.map((coreVal, idx) => (
             <div
               key={idx}
-              className="p-3 rounded bg-[#0b1220] border border-[#1a253a] flex flex-col justify-between"
+              className="p-2.5 rounded bg-[#18181b] border border-[#27272a] flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between text-[11px] text-slate-400">
+              <div className="flex items-center justify-between text-[11px] text-[#a1a1aa]">
                 <span>Core #{idx}</span>
                 <span
                   className={`font-mono font-bold ${
                     coreVal >= 90
-                      ? 'text-rose-400'
+                      ? 'text-[#ef4444]'
                       : coreVal >= 75
-                      ? 'text-amber-400'
-                      : 'text-blue-400'
+                      ? 'text-[#eab308]'
+                      : 'text-[#38bdf8]'
                   }`}
                 >
                   {coreVal.toFixed(0)}%
                 </span>
               </div>
-              <div className="mt-2 bg-slate-800 h-16 rounded overflow-hidden flex flex-col justify-end p-0.5">
+              <div className="mt-2 bg-[#09090b] h-14 rounded overflow-hidden flex flex-col justify-end p-0.5 border border-[#27272a]">
                 <div
-                  className={`w-full rounded-sm transition-all duration-300 ${
+                  className={`w-full rounded-xs transition-all duration-300 ${
                     coreVal >= 90
-                      ? 'bg-rose-500'
+                      ? 'bg-[#ef4444]'
                       : coreVal >= 75
-                      ? 'bg-amber-400'
-                      : 'bg-blue-500'
+                      ? 'bg-[#eab308]'
+                      : 'bg-[#38bdf8]'
                   }`}
                   style={{ height: `${Math.min(100, Math.max(4, coreVal))}%` }}
                 />

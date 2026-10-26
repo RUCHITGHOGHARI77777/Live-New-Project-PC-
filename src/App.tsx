@@ -1,12 +1,13 @@
 /**
  * WINDOWS X-RAY - Real-Time System Monitoring & Diagnostic Tool
- * Main Desktop Application Shell
+ * Main Desktop Application Shell with Mandatory Login / Demo Gate
  */
 
 import React, { useState, useEffect, useRef } from 'react';
 import { TitleBar } from './components/TitleBar';
 import { DemoBanner } from './components/DemoBanner';
 import { NavigationSidebar, NavTabId } from './components/NavigationSidebar';
+import { LoginGateScreen } from './components/LoginGateScreen';
 import { DashboardView } from './components/views/DashboardView';
 import { CpuView } from './components/views/CpuView';
 import { MemoryView } from './components/views/MemoryView';
@@ -18,7 +19,6 @@ import { AlertsView, ActiveAlert } from './components/views/AlertsView';
 import { HistoryReportsView, HistoryMetricEntry } from './components/views/HistoryReportsView';
 import { SettingsView } from './components/views/SettingsView';
 import { AboutView } from './components/views/AboutView';
-import { AuthModal } from './components/AuthModal';
 import { SafeTerminateModal } from './components/SafeTerminateModal';
 
 import { TelemetryService } from './logic/telemetryService';
@@ -26,6 +26,10 @@ import { DiagnosticsEngineWeb, DiagnosticItem } from './logic/diagnostics';
 import { TelemetrySnapshot, ProcessItem } from './logic/metrics';
 
 export default function App() {
+  // Mandatory Login Gate State (Starts unauthenticated by default)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useState<{ username: string; isLocal: boolean } | null>(null);
+
   const [activeTab, setActiveTab] = useState<NavTabId>('dashboard');
   const [isDemo, setIsDemo] = useState(false);
 
@@ -56,13 +60,12 @@ export default function App() {
   const alertBreachStarts = useRef<{ [metric: string]: number }>({});
   const lastAlertTimes = useRef<{ [metric: string]: number }>({});
 
-  // Modals
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [currentUser, setCurrentUser] = useState<{ username: string } | null>(null);
   const [processToTerminate, setProcessToTerminate] = useState<ProcessItem | null>(null);
 
-  // Initialize and sample telemetry stream
+  // Initialize and sample telemetry stream once authenticated
   useEffect(() => {
+    if (!isAuthenticated) return;
+
     telemetryServiceRef.current.setDemoMode(isDemo);
 
     let isMounted = true;
@@ -118,7 +121,7 @@ export default function App() {
       isMounted = false;
       clearInterval(timer);
     };
-  }, [isDemo, refreshInterval, cpuThreshold, ramThreshold, diskThreshold, sustainedDuration, cooldownSeconds]);
+  }, [isAuthenticated, isDemo, refreshInterval, cpuThreshold, ramThreshold, diskThreshold, sustainedDuration, cooldownSeconds]);
 
   // Alert Rule Evaluator with anti-spam cooldown and sustained duration check
   const evaluateAlertRules = (snap: TelemetrySnapshot) => {
@@ -187,12 +190,37 @@ export default function App() {
     setRetentionDays(7);
   };
 
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentUser(null);
+    setSnapshot(null);
+  };
+
+  // 1. MANDATORY LOGIN / SIGN UP GATE SCREEN
+  if (!isAuthenticated) {
+    return (
+      <LoginGateScreen
+        onAuthenticated={(user) => {
+          setCurrentUser(user);
+          setIsDemo(false);
+          setIsAuthenticated(true);
+        }}
+        onEnterDemo={() => {
+          setCurrentUser({ username: 'Evaluator (Demo)', isLocal: true });
+          setIsDemo(true);
+          setIsAuthenticated(true);
+        }}
+      />
+    );
+  }
+
+  // 2. INITIALIZING SCREEN
   if (!snapshot) {
     return (
-      <div className="min-h-screen bg-[#070b14] flex items-center justify-center text-slate-300 font-sans">
-        <div className="flex items-center gap-3">
-          <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
-          <span className="text-sm font-semibold tracking-wide">
+      <div className="min-h-screen bg-[#09090b] flex items-center justify-center text-[#f4f4f5] font-sans">
+        <div className="flex items-center gap-3 bg-[#121215] border border-[#27272a] px-5 py-3 rounded-lg shadow-xl">
+          <div className="w-4 h-4 border-2 border-[#38bdf8] border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs font-semibold tracking-wide text-[#a1a1aa]">
             Initializing Windows X-Ray Hardware Sensors...
           </span>
         </div>
@@ -200,23 +228,26 @@ export default function App() {
     );
   }
 
+  // 3. MAIN AUTHENTICATED DESKTOP UTILITY INTERFACE
   return (
-    <div className="h-screen w-screen bg-[#070b14] text-slate-100 flex flex-col overflow-hidden font-sans select-none">
-      {/* 1. Windows Native Title Bar */}
+    <div className="h-screen w-screen bg-[#09090b] text-[#f4f4f5] flex flex-col overflow-hidden font-sans select-none">
+      {/* Windows Native Title Bar */}
       <TitleBar
         isDemo={isDemo}
+        currentUser={currentUser}
         onToggleDemo={() => setIsDemo(!isDemo)}
         onDownloadZip={handleDownloadZip}
+        onLogout={handleLogout}
       />
 
-      {/* 2. Mode State Notice Banner */}
+      {/* Mode State Notice Banner */}
       <DemoBanner
         isDemo={isDemo}
         onReturnToLive={() => setIsDemo(false)}
         onSwitchToDemo={() => setIsDemo(true)}
       />
 
-      {/* 3. Main Desktop App Body */}
+      {/* Main Desktop App Body */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Nav Sidebar */}
         <NavigationSidebar
@@ -224,13 +255,12 @@ export default function App() {
           onSelectTab={setActiveTab}
           activeAlertCount={alerts.length}
           currentUser={currentUser}
-          onOpenAuth={() => setIsAuthOpen(true)}
-          onLogout={() => setCurrentUser(null)}
+          onLogout={handleLogout}
           onDownloadZip={handleDownloadZip}
         />
 
         {/* Content View Area */}
-        <main className="flex-1 overflow-y-auto bg-[#0a0f1d] p-5">
+        <main className="flex-1 overflow-y-auto bg-[#09090b] p-4">
           {activeTab === 'dashboard' && (
             <DashboardView
               snapshot={snapshot}
@@ -335,14 +365,6 @@ export default function App() {
           )}
         </main>
       </div>
-
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={isAuthOpen}
-        onClose={() => setIsAuthOpen(false)}
-        onLoginSuccess={(user) => setCurrentUser(user)}
-        onStartDemo={() => setIsDemo(true)}
-      />
 
       {/* Safe Process Termination Risk Modal */}
       <SafeTerminateModal

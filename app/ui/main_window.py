@@ -1,7 +1,6 @@
 """
 Windows X-Ray - PySide6 Desktop User Interface
-Main desktop application window with dark navy/slate theme, restrained blue accents,
-clean tabs, responsive layouts, and real-time worker thread.
+Main desktop application window with pure black / charcoal theme (Windows Process Explorer / Task Manager style)
 """
 
 import sys
@@ -23,7 +22,7 @@ except ImportError:
 from app.constants import (
     APP_NAME, APP_VERSION, APP_TAGLINE,
     COLOR_BACKGROUND, COLOR_PANEL_BG, COLOR_PANEL_BORDER,
-    COLOR_ACCENT_BLUE, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY
+    COLOR_ACCENT, COLOR_TEXT_PRIMARY, COLOR_TEXT_SECONDARY
 )
 from app.config import ConfigManager
 from app.services.database import DatabaseManager
@@ -76,25 +75,25 @@ class MainWindow:
                 border-right: 1px solid {COLOR_PANEL_BORDER};
             }}
             QPushButton {{
-                background-color: #1e293b;
-                border: 1px solid #334155;
-                border-radius: 6px;
+                background-color: #18181b;
+                border: 1px solid {COLOR_PANEL_BORDER};
+                border-radius: 4px;
                 padding: 8px 14px;
-                color: #f8fafc;
+                color: #f4f4f5;
                 font-weight: 500;
             }}
             QPushButton:hover {{
-                background-color: {COLOR_ACCENT_BLUE};
-                border-color: #60a5fa;
+                background-color: #27272a;
+                border-color: #3f3f46;
             }}
             QTableWidget {{
                 background-color: {COLOR_PANEL_BG};
                 gridline-color: {COLOR_PANEL_BORDER};
                 border: 1px solid {COLOR_PANEL_BORDER};
-                border-radius: 6px;
+                border-radius: 4px;
             }}
             QHeaderView::section {{
-                background-color: #1e293b;
+                background-color: #18181b;
                 color: {COLOR_TEXT_SECONDARY};
                 padding: 6px;
                 border: none;
@@ -113,32 +112,32 @@ class MainWindow:
         sidebar.setObjectName("sidebar")
         sidebar.setFixedWidth(220)
         side_layout = QVBoxLayout(sidebar)
-        side_layout.setContentsMargins(16, 20, 16, 20)
+        side_layout.setContentsMargins(14, 18, 14, 18)
 
         app_title = QLabel(APP_NAME)
-        app_title.setStyleSheet("font-size: 18px; font-weight: bold; color: #3b82f6;")
-        app_tag = QLabel("Diagnostic Monitor")
-        app_tag.setStyleSheet("font-size: 11px; color: #94a3b8; margin-bottom: 20px;")
+        app_title.setStyleSheet("font-size: 16px; font-weight: bold; color: #fafafa;")
+        app_tag = QLabel("Diagnostic & Hardware Monitor")
+        app_tag.setStyleSheet("font-size: 11px; color: #71717a; margin-bottom: 16px;")
         side_layout.addWidget(app_title)
         side_layout.addWidget(app_tag)
 
         # Nav buttons
         tabs = [
-            "Dashboard", "CPU", "Memory", "Disk",
-            "Network", "Processes", "Diagnostics",
-            "Alerts", "History / Reports", "Settings", "About"
+            "Dashboard", "CPU Performance", "Memory Allocation", "Storage Drives",
+            "Network Throughput", "Processes & Tasks", "Diagnostics Engine",
+            "Alert Policies", "History & Reports", "Configuration", "About & Manual"
         ]
         self.nav_buttons = []
         for name in tabs:
             btn = QPushButton(name)
-            btn.setStyleSheet("text-align: left; padding: 10px 14px; font-size: 13px;")
+            btn.setStyleSheet("text-align: left; padding: 8px 12px; font-size: 12px;")
             side_layout.addWidget(btn)
             self.nav_buttons.append(btn)
 
         side_layout.addStretch()
 
-        mode_badge = QLabel("Mode: DEMO" if self.settings.is_demo_mode else "Mode: LIVE")
-        mode_badge.setStyleSheet("font-size: 12px; color: #f59e0b;" if self.settings.is_demo_mode else "font-size: 12px; color: #10b981;")
+        mode_badge = QLabel("Mode: DEMO (Simulated)" if self.settings.is_demo_mode else "Mode: LIVE (Hardware)")
+        mode_badge.setStyleSheet("font-size: 11px; color: #eab308;" if self.settings.is_demo_mode else "font-size: 11px; color: #22c55e;")
         side_layout.addWidget(mode_badge)
 
         main_layout.addWidget(sidebar)
@@ -146,14 +145,14 @@ class MainWindow:
         # Content view container
         content_container = QWidget()
         content_layout = QVBoxLayout(content_container)
-        content_layout.setContentsMargins(24, 24, 24, 24)
+        content_layout.setContentsMargins(20, 20, 20, 20)
 
-        header_lbl = QLabel(f"Live System Monitoring & Diagnostics - {APP_NAME}")
-        header_lbl.setStyleSheet("font-size: 20px; font-weight: bold; margin-bottom: 12px;")
+        header_lbl = QLabel(f"Hardware Telemetry & Systems Diagnostics - {APP_NAME}")
+        header_lbl.setStyleSheet("font-size: 18px; font-weight: bold; margin-bottom: 8px; color: #fafafa;")
         content_layout.addWidget(header_lbl)
 
-        info_lbl = QLabel("Monitoring active. Use the tabs on the left to navigate system metrics.")
-        info_lbl.setStyleSheet("color: #94a3b8; margin-bottom: 20px;")
+        info_lbl = QLabel("Monitoring active. Select an item from the left navigation panel to inspect subsystems.")
+        info_lbl.setStyleSheet("color: #71717a; margin-bottom: 16px; font-size: 12px;")
         content_layout.addWidget(info_lbl)
 
         content_layout.addStretch()

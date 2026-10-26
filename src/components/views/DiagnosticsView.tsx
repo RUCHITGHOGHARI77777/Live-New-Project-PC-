@@ -8,28 +8,28 @@ interface DiagnosticsViewProps {
 
 export const DiagnosticsView: React.FC<DiagnosticsViewProps> = ({ diagnostics }) => {
   return (
-    <div className="space-y-5 pb-6">
+    <div className="space-y-4 pb-6">
       {/* Header */}
-      <div className="bg-[#10172a] border border-[#1f293d] rounded-lg p-4">
+      <div className="bg-[#121215] border border-[#27272a] rounded p-4">
         <div className="flex items-center gap-2">
-          <Stethoscope className="w-5 h-5 text-blue-400" />
-          <h2 className="text-base font-bold text-slate-100">
-            Explainable Rule-Based Diagnostics Engine
+          <Stethoscope className="w-5 h-5 text-[#38bdf8]" />
+          <h2 className="text-base font-bold text-[#fafafa]">
+            Explainable Diagnostics Engine (Advisory Observations)
           </h2>
         </div>
-        <p className="text-xs text-slate-400 mt-1">
-          Automated evaluation of live hardware utilization rules. Observations provide transparency into system state with actionable next steps.
+        <p className="text-xs text-[#a1a1aa] mt-1">
+          Automated evaluation of live hardware utilization rules. Observations provide actionable transparency without definitive claims.
         </p>
       </div>
 
       {/* Mandatory Disclaimer Box */}
-      <div className="bg-[#0b1324] border border-blue-900/40 rounded-lg p-3.5 text-xs text-slate-300 flex items-start gap-3">
-        <ShieldAlert className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+      <div className="bg-[#121215] border border-[#27272a] rounded p-3 text-xs text-[#d4d4d8] flex items-start gap-2.5">
+        <ShieldAlert className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
         <div>
-          <span className="font-bold text-blue-300">Diagnostic Scope & Advisory Notice:</span>{' '}
-          <span className="text-slate-400">
+          <span className="font-bold text-[#fafafa]">Diagnostic Scope & Advisory Statement:</span>{' '}
+          <span className="text-[#a1a1aa]">
             All findings listed below are deterministic, rule-based indicators intended to highlight potential resource bottlenecks or heavy workloads.
-            They represent possible causes—not definitive diagnoses, hardware failures, or security compromises.
+            They represent possible causes—not definitive hardware failures, infection, or malware.
           </span>
         </div>
       </div>
@@ -43,64 +43,64 @@ export const DiagnosticsView: React.FC<DiagnosticsViewProps> = ({ diagnostics })
           return (
             <div
               key={item.id}
-              className={`p-4 rounded-lg border transition-all ${
+              className={`p-3.5 rounded border transition-colors ${
                 isCritical
                   ? 'bg-rose-950/20 border-rose-500/30'
                   : isWarning
                   ? 'bg-amber-950/20 border-amber-500/30'
-                  : 'bg-[#10172a] border-[#1f293d]'
+                  : 'bg-[#121215] border-[#27272a]'
               }`}
             >
-              <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#1f293d]">
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[#27272a]">
                 <div className="flex items-center gap-2.5">
                   <span
-                    className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${
+                    className={`px-1.5 py-0.2 rounded text-[10px] font-bold uppercase tracking-wider ${
                       isCritical
-                        ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40'
+                        ? 'bg-rose-900/40 text-rose-300 border border-rose-500/40'
                         : isWarning
-                        ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                        : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                        ? 'bg-amber-900/40 text-amber-300 border border-amber-500/40'
+                        : 'bg-emerald-900/40 text-emerald-300 border border-emerald-500/40'
                     }`}
                   >
                     {item.severity}
                   </span>
-                  <span className="text-xs font-semibold text-slate-400">
-                    Category: <span className="text-slate-200">{item.category}</span>
+                  <span className="text-xs font-semibold text-[#a1a1aa]">
+                    Category: <span className="text-[#fafafa]">{item.category}</span>
                   </span>
-                  <span className="font-bold text-sm text-slate-100">{item.title}</span>
+                  <span className="font-bold text-sm text-[#fafafa]">{item.title}</span>
                 </div>
-                <div className="text-[11px] text-slate-500 font-mono">
+                <div className="text-[11px] text-[#71717a] font-mono">
                   {new Date(item.timestamp).toLocaleTimeString()}
                 </div>
               </div>
 
               {/* Finding Evidence & Rule Threshold */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-3 text-xs">
-                <div className="p-2.5 rounded bg-[#090e1c] border border-[#1a253a]">
-                  <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-2.5 text-xs">
+                <div className="p-2.5 rounded bg-[#09090b] border border-[#27272a]">
+                  <div className="text-[11px] font-semibold text-[#a1a1aa] uppercase tracking-wide">
                     Observed Telemetry Evidence
                   </div>
-                  <div className="mt-1 text-slate-200 leading-relaxed font-mono text-[11px]">
+                  <div className="mt-1 text-[#e4e4e7] leading-relaxed font-mono text-[11px]">
                     {item.evidence}
                   </div>
                 </div>
 
-                <div className="p-2.5 rounded bg-[#090e1c] border border-[#1a253a]">
-                  <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wide">
-                    Evaluation Rule & Trigger Criteria
+                <div className="p-2.5 rounded bg-[#09090b] border border-[#27272a]">
+                  <div className="text-[11px] font-semibold text-[#a1a1aa] uppercase tracking-wide">
+                    Evaluation Rule & Threshold
                   </div>
-                  <div className="mt-1 text-slate-300 leading-relaxed">
+                  <div className="mt-1 text-[#d4d4d8] leading-relaxed">
                     {item.threshold}
                   </div>
                 </div>
               </div>
 
               {/* Practical Next Step */}
-              <div className="p-2.5 rounded bg-blue-950/30 border border-blue-800/30 text-xs flex items-start gap-2">
-                <Info className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+              <div className="p-2 rounded bg-[#18181b] border border-[#27272a] text-xs flex items-start gap-2">
+                <Info className="w-3.5 h-3.5 text-[#38bdf8] shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-semibold text-blue-300">Actionable Next Step:</span>{' '}
-                  <span className="text-slate-300">{item.practicalStep}</span>
+                  <span className="font-semibold text-[#38bdf8]">Actionable Next Step:</span>{' '}
+                  <span className="text-[#d4d4d8]">{item.practicalStep}</span>
                 </div>
               </div>
             </div>

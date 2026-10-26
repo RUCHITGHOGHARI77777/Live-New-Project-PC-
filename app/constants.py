@@ -1,5 +1,6 @@
 """
 Windows X-Ray - Constants & Configuration Defaults
+Professional Black / Charcoal Systems Utility Theme (Process Explorer / Task Manager style)
 """
 
 APP_NAME = "Windows X-Ray"
@@ -25,15 +26,15 @@ DEFAULT_RETENTION_DAYS = 7
 MIN_RETENTION_DAYS = 1
 MAX_RETENTION_DAYS = 90
 
-# UI Theme Colors (Dark Navy / Black with restrained blue accent)
-COLOR_BACKGROUND = "#0a0f1d"       # Deep Dark Navy/Black
-COLOR_PANEL_BG = "#111827"         # Slate Panel Background
-COLOR_PANEL_BORDER = "#1f293d"     # Subtle border
-COLOR_ACCENT_BLUE = "#3b82f6"      # Restrained Primary Blue
-COLOR_ACCENT_HOVER = "#60a5fa"     # Light Blue Hover
-COLOR_TEXT_PRIMARY = "#f1f5f9"     # High-contrast slate white
-COLOR_TEXT_SECONDARY = "#94a3b8"   # Muted slate secondary text
-COLOR_SUCCESS = "#10b981"          # Emerald green
-COLOR_WARNING = "#f59e0b"          # Amber warning
-COLOR_CRITICAL = "#ef4444"         # Rose red critical
-COLOR_DEMO_BANNER = "#f59e0b"      # Amber banner for demo mode
+# UI Theme Colors (Professional Pure Black & Charcoal System Utility)
+COLOR_BACKGROUND = "#09090b"       # Pure Deep Charcoal Black
+COLOR_PANEL_BG = "#121215"         # Dark Surface Panel
+COLOR_PANEL_BORDER = "#27272a"     # Zinc 800 Border
+COLOR_ACCENT = "#38bdf8"           # Clean Ice Blue / Sky Accent (Restrained)
+COLOR_ACCENT_HOVER = "#0284c7"     # Darker hover
+COLOR_TEXT_PRIMARY = "#f4f4f5"     # Zinc 100 High Contrast Text
+COLOR_TEXT_SECONDARY = "#a1a1aa"   # Zinc 400 Readable Neutral
+COLOR_SUCCESS = "#22c55e"          # Muted Green
+COLOR_WARNING = "#eab308"          # Muted Amber
+COLOR_CRITICAL = "#ef4444"         # Muted Red
+COLOR_DEMO_BANNER = "#ca8a04"      # Amber

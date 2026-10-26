@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, AlertTriangle, CheckCircle2, Trash2, Sliders, Volume2, VolumeX } from 'lucide-react';
+import { Bell, AlertTriangle, CheckCircle2, Trash2, Sliders } from 'lucide-react';
 
 export interface ActiveAlert {
   id: string;
@@ -43,45 +43,45 @@ export const AlertsView: React.FC<AlertsViewProps> = ({
   onChangeCooldown,
 }) => {
   return (
-    <div className="space-y-5 pb-6">
+    <div className="space-y-4 pb-6">
       {/* Header */}
-      <div className="bg-[#10172a] border border-[#1f293d] rounded-lg p-4 flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-[#121215] border border-[#27272a] rounded p-4 flex flex-wrap items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <Bell className="w-5 h-5 text-amber-400" />
-            <h2 className="text-base font-bold text-slate-100">
-              Active Alerts & Threshold Management
+            <Bell className="w-5 h-5 text-[#eab308]" />
+            <h2 className="text-base font-bold text-[#fafafa]">
+              Alert Policies & Anti-Spam Cooldown
             </h2>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Configure sustained threshold filters to prevent transient noise and notification spam.
+          <p className="text-xs text-[#a1a1aa] mt-1">
+            Configure sustained threshold filters to eliminate false-alarm spikes and notification noise.
           </p>
         </div>
 
         {alerts.length > 0 && (
           <button
             onClick={onClearAllAlerts}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 text-xs font-medium transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#18181b] hover:bg-[#27272a] text-[#f4f4f5] border border-[#27272a] text-xs font-medium transition-colors cursor-pointer"
           >
-            <Trash2 className="w-3.5 h-3.5 text-slate-400" />
-            <span>Dismiss All Active</span>
+            <Trash2 className="w-3.5 h-3.5 text-[#a1a1aa]" />
+            <span>Dismiss All Incidents</span>
           </button>
         )}
       </div>
 
       {/* Threshold & Sustained Duration Tuning Cards */}
-      <div className="bg-[#10172a] border border-[#1f293d] rounded-lg p-4">
-        <div className="flex items-center gap-2 mb-4 text-xs font-bold text-slate-200 uppercase tracking-wide">
-          <Sliders className="w-4 h-4 text-blue-400" />
-          <span>Configurable Alert Trigger Policies</span>
+      <div className="bg-[#121215] border border-[#27272a] rounded p-4">
+        <div className="flex items-center gap-2 mb-3 text-xs font-bold text-[#fafafa] uppercase tracking-wide">
+          <Sliders className="w-4 h-4 text-[#38bdf8]" />
+          <span>Configurable Threshold Controls</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
           {/* CPU Threshold */}
-          <div className="p-3 rounded bg-[#0b1220] border border-[#1a253a] space-y-2">
+          <div className="p-3 rounded bg-[#18181b] border border-[#27272a] space-y-2">
             <div className="flex justify-between font-semibold">
-              <span className="text-slate-300">CPU Load Alert</span>
-              <span className="text-blue-400 font-mono">{cpuThreshold}%</span>
+              <span className="text-[#a1a1aa]">CPU Load Trigger</span>
+              <span className="text-[#38bdf8] font-mono">{cpuThreshold}%</span>
             </div>
             <input
               type="range"
@@ -90,16 +90,16 @@ export const AlertsView: React.FC<AlertsViewProps> = ({
               value={cpuThreshold}
               onChange={(e) => onChangeCpuThreshold(parseInt(e.target.value))}
               aria-label="CPU Threshold"
-              className="w-full accent-blue-500 cursor-pointer"
+              className="w-full accent-[#38bdf8] cursor-pointer"
             />
-            <div className="text-[11px] text-slate-500">Triggers when total CPU &ge; {cpuThreshold}%</div>
+            <div className="text-[11px] text-[#71717a]">Triggers when total CPU &ge; {cpuThreshold}%</div>
           </div>
 
           {/* RAM Threshold */}
-          <div className="p-3 rounded bg-[#0b1220] border border-[#1a253a] space-y-2">
+          <div className="p-3 rounded bg-[#18181b] border border-[#27272a] space-y-2">
             <div className="flex justify-between font-semibold">
-              <span className="text-slate-300">RAM Pressure Alert</span>
-              <span className="text-emerald-400 font-mono">{ramThreshold}%</span>
+              <span className="text-[#a1a1aa]">RAM Pressure Trigger</span>
+              <span className="text-[#10b981] font-mono">{ramThreshold}%</span>
             </div>
             <input
               type="range"
@@ -108,16 +108,16 @@ export const AlertsView: React.FC<AlertsViewProps> = ({
               value={ramThreshold}
               onChange={(e) => onChangeRamThreshold(parseInt(e.target.value))}
               aria-label="RAM Threshold"
-              className="w-full accent-emerald-500 cursor-pointer"
+              className="w-full accent-[#10b981] cursor-pointer"
             />
-            <div className="text-[11px] text-slate-500">Triggers when used RAM &ge; {ramThreshold}%</div>
+            <div className="text-[11px] text-[#71717a]">Triggers when used RAM &ge; {ramThreshold}%</div>
           </div>
 
           {/* Disk Threshold */}
-          <div className="p-3 rounded bg-[#0b1220] border border-[#1a253a] space-y-2">
+          <div className="p-3 rounded bg-[#18181b] border border-[#27272a] space-y-2">
             <div className="flex justify-between font-semibold">
-              <span className="text-slate-300">Disk Capacity Alert</span>
-              <span className="text-purple-400 font-mono">{diskThreshold}%</span>
+              <span className="text-[#a1a1aa]">Disk Capacity Trigger</span>
+              <span className="text-[#a855f7] font-mono">{diskThreshold}%</span>
             </div>
             <input
               type="range"
@@ -126,18 +126,18 @@ export const AlertsView: React.FC<AlertsViewProps> = ({
               value={diskThreshold}
               onChange={(e) => onChangeDiskThreshold(parseInt(e.target.value))}
               aria-label="Disk Capacity Threshold"
-              className="w-full accent-purple-500 cursor-pointer"
+              className="w-full accent-[#a855f7] cursor-pointer"
             />
-            <div className="text-[11px] text-slate-500">Triggers when volume used &ge; {diskThreshold}%</div>
+            <div className="text-[11px] text-[#71717a]">Triggers when volume used &ge; {diskThreshold}%</div>
           </div>
         </div>
 
         {/* Sustained Duration & Anti-Spam Cooldown */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t border-[#1a253a] text-xs">
-          <div className="p-3 rounded bg-[#0b1220] border border-[#1a253a] space-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 pt-3 border-t border-[#27272a] text-xs">
+          <div className="p-3 rounded bg-[#18181b] border border-[#27272a] space-y-2">
             <div className="flex justify-between font-semibold">
-              <span className="text-slate-300">Sustained Requirement (Anti-Spike)</span>
-              <span className="text-amber-400 font-mono">{sustainedDuration}s</span>
+              <span className="text-[#a1a1aa]">Sustained Duration (Anti-Spike)</span>
+              <span className="text-[#eab308] font-mono">{sustainedDuration}s</span>
             </div>
             <input
               type="range"
@@ -146,15 +146,15 @@ export const AlertsView: React.FC<AlertsViewProps> = ({
               value={sustainedDuration}
               onChange={(e) => onChangeSustainedDuration(parseInt(e.target.value))}
               aria-label="Sustained Requirement Duration"
-              className="w-full accent-amber-500 cursor-pointer"
+              className="w-full accent-[#eab308] cursor-pointer"
             />
-            <div className="text-[11px] text-slate-500">Condition must remain high for {sustainedDuration}s continuously</div>
+            <div className="text-[11px] text-[#71717a]">Condition must remain high for {sustainedDuration}s continuously</div>
           </div>
 
-          <div className="p-3 rounded bg-[#0b1220] border border-[#1a253a] space-y-2">
+          <div className="p-3 rounded bg-[#18181b] border border-[#27272a] space-y-2">
             <div className="flex justify-between font-semibold">
-              <span className="text-slate-300">Notification Cooldown Window</span>
-              <span className="text-cyan-400 font-mono">{cooldownSeconds}s</span>
+              <span className="text-[#a1a1aa]">Anti-Spam Cooldown Window</span>
+              <span className="text-[#38bdf8] font-mono">{cooldownSeconds}s</span>
             </div>
             <input
               type="range"
@@ -164,52 +164,52 @@ export const AlertsView: React.FC<AlertsViewProps> = ({
               value={cooldownSeconds}
               onChange={(e) => onChangeCooldown(parseInt(e.target.value))}
               aria-label="Notification Cooldown Window"
-              className="w-full accent-cyan-500 cursor-pointer"
+              className="w-full accent-[#38bdf8] cursor-pointer"
             />
-            <div className="text-[11px] text-slate-500">Suppresses repeated notifications for {cooldownSeconds}s</div>
+            <div className="text-[11px] text-[#71717a]">Suppresses repeated alerts for {cooldownSeconds}s</div>
           </div>
         </div>
       </div>
 
       {/* Active Alerts List */}
-      <div className="space-y-3">
-        <div className="text-xs font-bold text-slate-300 uppercase tracking-wide">
+      <div className="space-y-2.5">
+        <div className="text-xs font-bold text-[#fafafa] uppercase tracking-wide">
           Active Alert Incidents ({alerts.length})
         </div>
 
         {alerts.length === 0 ? (
-          <div className="bg-[#10172a] border border-[#1f293d] rounded-lg p-8 text-center text-xs text-slate-400 space-y-2">
-            <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto" />
-            <div className="font-semibold text-slate-200 text-sm">No Active Alert Incidents</div>
-            <p className="text-slate-400 max-w-md mx-auto">
-              Hardware readings are operating within normal operational envelopes. If a metric breaches your configured threshold for more than {sustainedDuration} seconds, an alert will be logged here.
+          <div className="bg-[#121215] border border-[#27272a] rounded p-6 text-center text-xs text-[#a1a1aa] space-y-1.5">
+            <CheckCircle2 className="w-6 h-6 text-[#22c55e] mx-auto" />
+            <div className="font-semibold text-[#fafafa]">No Active Alert Conditions</div>
+            <p className="text-[#71717a] max-w-sm mx-auto">
+              All monitored metrics are operating below configured alert thresholds.
             </p>
           </div>
         ) : (
           alerts.map((alert) => (
             <div
               key={alert.id}
-              className={`p-3.5 rounded-lg border flex items-center justify-between gap-3 text-xs ${
+              className={`p-3 rounded border flex items-center justify-between gap-3 text-xs ${
                 alert.severity === 'critical'
-                  ? 'bg-rose-950/30 border-rose-500/40'
-                  : 'bg-amber-950/30 border-amber-500/40'
+                  ? 'bg-rose-950/20 border-rose-500/30'
+                  : 'bg-amber-950/20 border-amber-500/30'
               }`}
             >
               <div className="flex items-center gap-3">
                 <AlertTriangle
-                  className={`w-5 h-5 shrink-0 ${
-                    alert.severity === 'critical' ? 'text-rose-400' : 'text-amber-400'
+                  className={`w-4 h-4 shrink-0 ${
+                    alert.severity === 'critical' ? 'text-[#ef4444]' : 'text-[#eab308]'
                   }`}
                 />
                 <div>
-                  <div className="font-bold text-slate-100 flex items-center gap-2">
+                  <div className="font-bold text-[#fafafa] flex items-center gap-2">
                     <span>{alert.metricName}</span>
-                    <span className="text-[10px] uppercase font-mono px-1.5 py-0.2 rounded bg-slate-900/60 border border-slate-700 text-slate-300">
+                    <span className="text-[10px] uppercase font-mono px-1 py-0.2 rounded bg-[#18181b] border border-[#27272a] text-[#a1a1aa]">
                       {alert.severity}
                     </span>
                   </div>
-                  <div className="text-slate-300 mt-0.5">{alert.message}</div>
-                  <div className="text-[10px] text-slate-400 mt-0.5 font-mono">
+                  <div className="text-[#d4d4d8] mt-0.5">{alert.message}</div>
+                  <div className="text-[10px] text-[#71717a] mt-0.5 font-mono">
                     Logged at {new Date(alert.timestamp).toLocaleTimeString()}
                   </div>
                 </div>
@@ -217,7 +217,7 @@ export const AlertsView: React.FC<AlertsViewProps> = ({
 
               <button
                 onClick={() => onDismissAlert(alert.id)}
-                className="px-2.5 py-1 rounded bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-700 font-medium transition-colors"
+                className="px-2.5 py-1 rounded bg-[#18181b] hover:bg-[#27272a] text-[#f4f4f5] border border-[#27272a] font-medium transition-colors cursor-pointer"
               >
                 Dismiss
               </button>
